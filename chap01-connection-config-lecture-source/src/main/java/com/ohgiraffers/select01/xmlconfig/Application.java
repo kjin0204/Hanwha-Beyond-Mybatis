@@ -15,8 +15,8 @@ public class Application {
         /* 설명. JDBC에서의 Connection 객체 같은 개념 */
         SqlSession session = null;
 
-        try {
-            InputStream inputStream = Resources.getResourceAsStream(resource);
+        try (InputStream inputStream = Resources.getResourceAsStream(resource)){
+
 
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 
