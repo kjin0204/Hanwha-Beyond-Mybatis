@@ -10,4 +10,8 @@ public class PrintResult {
     public void printeErrorMessage(String message) {
         System.out.println("에러 메시지: " + message);
     }
+
+    public void printMenu(MenuDTO menu) {
+        System.out.println("menu = " + menu);
+    }
 }

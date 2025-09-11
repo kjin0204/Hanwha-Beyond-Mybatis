@@ -3,8 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="MenuMapper">
+    <!-- resultMap의 column 속성은 ResultSet의 컬럼명을 써야 한다.(컬럼명 또는 별칭) -->
+    <!-- 매핑은 필요한 것만 매핑해도 문제없이 객체에 담겨 반환된다.-->
     <resultMap id="menuResultMap" type="com.ohgiraffers.section01.xmlconfig.MenuDTO">
-        <id property="menuCode" column="MENU_CODE"/> <!-- pk -->
+        <id property="menuCode" column="MENU_CODE"/> <!-- pk 컬럼은 id 태그를 사용하면 속도 향상의 이점-->
         <result property="menuName" column="MENU_NAME"/>
         <result property="menuPrice" column="MENU_PRICE"/>
         <result property="categoryCode" column="CATEGORY_CODE"/>
@@ -18,5 +20,18 @@
              , CATEGORY_CODE
              , ORDERABLE_STATUS
           FROM TBL_MENU
+    </select>
+    <select id="selectMenu" resultMap="menuResultMap" parameterType="_int">
+        SELECT
+               MENU_CODE
+             , MENU_NAME
+             , MENU_PRICE
+             , CATEGORY_CODE
+             , ORDERABLE_STATUS
+         FROM TBL_MENU
+        WHERE MENU_CODE = #{menuCode}
+
+
+
     </select>
 </mapper>

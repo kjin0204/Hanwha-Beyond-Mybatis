@@ -1,5 +1,7 @@
 package com.ohgiraffers.section01.xmlconfig;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Application {
@@ -21,6 +23,7 @@ public class Application {
                     mc.findAllMenus();
                     break;
                 case 2:
+                    mc.findMenuByMenuCode(inputMenuCode());
                     break;
                 case 3:
                     break;
@@ -35,5 +38,17 @@ public class Application {
                     System.out.println("번호를 잘 확인하고 입력 해 주세요.");
             }
         }while(true);
+    }
+
+    /* 설명. Map<String, String> 형태로 web에서처럼(request parameter 개념으로) key,value 형태로 넘길 예정 */
+    private static Map<String,String> inputMenuCode() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("조회 할 메노를 입력하세요: ");
+        String menuCode = sc.nextLine();
+
+        Map<String,String> parameter = new HashMap<>();
+        parameter.put("menuCode",menuCode);
+
+        return parameter;
     }
 }
