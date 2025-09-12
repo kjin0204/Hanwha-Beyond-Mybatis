@@ -42,6 +42,7 @@ public class Application {
         do {
             System.out.println("====== if 서브메뉴 ======");
             System.out.println("1. 원하는 금액대에 적합한 추천 메뉴 목록 보여주기");
+            System.out.println("2. 메뉴 이름 혹은 카테고리명으로 검색하여 메뉴 목록 보여주기");
             System.out.println("9. 이전 메뉴로");
             System.out.println("메뉴 번호를 입력해 주세요: ");
             int input = sc.nextInt();
@@ -49,11 +50,25 @@ public class Application {
                 case 1:
                     ms.findMenuByPrice(inputPrice());
                     break;
+                case 2:
+                    ms.searchMenu(inputSearchCriteria());
+                    break;
                 case 9:
                     return;
 
             }
         } while (true);
+    }
+
+    /* 설명. 검색을 위해 필요한 내용만을 가지는 SearchCriteria를 반환하는 메소드 */
+    private static SearchCriteria inputSearchCriteria() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("검색 기준을 입력해 주세요(name or category): ");
+        String condition = sc.nextLine();
+        System.out.print("검색어를 입력해 주세요: ");
+        String value = sc.nextLine();
+
+        return new SearchCriteria(condition, value);
     }
 
     private static int inputPrice() {

@@ -15,7 +15,9 @@
             </dataSource>
         </environment>
     </environments>
+    <!-- 설명. mapper들이 존재하는 패키지로 한번에 등록 가능(rimix 방식만 해당) -->
     <mappers>
-        <mapper resource="com/ohgiraffers/dynamic/MenuMapper.xml"/>
+<!--        <mapper resource="com/ohgiraffers/dynamic/MenuMapper.xml"/>-->
+        <package name="com.ohgiraffers.dynamic"/>
     </mappers>
 </configuration>
