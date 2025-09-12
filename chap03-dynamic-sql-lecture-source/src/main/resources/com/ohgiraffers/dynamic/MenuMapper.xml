@@ -105,9 +105,46 @@
         <foreach collection="list" item="menuCode" open="(" close=")" separator=", ">
             #{menuCode}
         </foreach>
-
-
     </select>
 
+    <select id="searchMenuByCodeOrSearchAll" parameterType="com.ohgiraffers.dynamic.SearchCriteria"
+            resultMap="menuResultMap">
+        SELECT
+               A.MENU_CODE
+             , A.MENU_NAME
+             , A.MENU_PRICE
+             , A.CATEGORY_CODE
+             , A.ORDERABLE_STATUS
+        FROM TBL_MENU A
+        <if test="condition != null and condition =='menuCode'">
+            WHERE A.MENU_CODE = ${value}
+        </if>
+    </select>
+    <!-- where절이 공통되지 않는 경우 -->
+    <!-- 설명.
+          i) where
+          i-1) where 태그를 하나만 작성함
+          i-2) AND는 필요하면 활용하고 없으면 무시함(WHERE 다음에 바로 AND나 OR이 오면 무시함)
+
+         설명.
+          ii) trim
+    -->
+    <select id="searchMenuByNameOrCategory" parameterType="hashmap" resultMap="menuResultMap">
+        SELECT
+               A.MENU_CODE
+             , A.MENU_NAME
+             , A.MENU_PRICE
+             , A.CATEGORY_CODE
+             , A.ORDERABLE_STATUS
+          FROM TBL_MENU A
+        <where>
+            <if test="name != null">
+                A.MENU_NAME LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="categoryCode != null">
+                AND A.CATEGORY_CODE = ${categoryCode}
+            </if>
+        </where>
+    </select>
 
 </mapper>
