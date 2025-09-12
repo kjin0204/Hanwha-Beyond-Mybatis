@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohgiraffers.dynamic.MenuMapper">
+    <resultMap id="menuResultMap" type="com.ohgiraffers.dynamic.MenuDTO"> <!-- typeAlias 적용 이후 -->
+        <id property="menuCode" column="MENU_CODE"/> <!-- pk 컬럼은 id 태그를 사용하면 속도 향상의 이점-->
+        <result property="menuName" column="MENU_NAME"/>
+        <result property="menuPrice" column="MENU_PRICE"/>
+        <result property="categoryCode" column="CATEGORY_CODE"/>
+        <result property="orderableStatus" column="ORDERABLE_STATUS"/>
+    </resultMap>
+    <select id="selectMenuByPrice" parameterType="_int" resultMap="menuResultMap">
+        SELECT
+               A.MENU_CODE
+             , A.MENU_NAME
+             , A.MENU_PRICE
+             , A.CATEGORY_CODE
+             , A.ORDERABLE_STATUS
+          FROM TBL_MENU A
+         WHERE A.ORDERABLE_STATUS = 'Y'
+        <if test="maxPrice gte 0 and maxPrice lte 10000">
+        <![CDATA[
+           AND A.MENU_PRICE < #{maxPrice}
+           ]]>
+        </if>
+        <if test="maxPrice gt 10000 and maxPrice lte 20000">
+           AND A.MENU_PRICE BETWEEN 10000 AND #{maxPrice}
+        </if>
+        <if test="maxPrice gt 20000 and maxPrice lte 30000">
+           AND A.MENU_PRICE BETWEEN 20000 AND #{maxPrice}
+        </if>
+        <if test="maxPrice gt 30000">
+           AND A.MENU_PRICE BETWEEN 30000 AND #{maxPrice}
+        </if>
+    </select>
+
+
+
+</mapper>
