@@ -29,4 +29,24 @@ public class ElementService {
 
         sqlSession.close();
     }
+
+    public void selectResultMapCollectionTest() {
+        SqlSession sqlSession = getSqlSession();
+        ElementMapper mapper = sqlSession.getMapper(ElementMapper.class);
+
+        List<CategoryAndMenuDTO> categories = mapper.selectResultMapCollectionTest();
+        categories.forEach(System.out::println);
+
+        System.out.println();
+        System.out.println("식사 카테고리의 메뉴들: " );
+        System.out.println(categories.get(0).getMenus());
+
+        System.out.println("스트림 출력 : ");
+                categories.stream()
+                .filter(x -> "한식".equals(x.getCategoryName()))
+                .forEach(c -> System.out.println(c.getMenus()));
+
+
+        sqlSession.close();
+    }
 }
