@@ -58,10 +58,30 @@ public class Application {
                 case 2:
                     ms.searchMenuByNameOrCategory(inputSearchCriteriaMap());
                     break;
+                case 3:
+                    ms.modifyMenu(inputChangeInfo());
                 case 9:
                     return;
             }
         } while (true);
+    }
+
+    private static Map<String,Object> inputChangeInfo() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("변경할 메뉴 코드를 입력하세요: ");
+        int menuCode = sc.nextInt();
+        sc.nextLine();
+        System.out.print("변경할 메뉴 이름을 입력하세요: ");
+        String menuName = sc.nextLine();
+        System.out.print("변경할 판매 여부를 결정해 주세요(Y,N)");
+        String orferableStatus = sc.nextLine().toUpperCase();
+
+        Map<String, Object> critMap = new HashMap<>();
+        critMap.put("menuCode", menuCode);
+        critMap.put("menuName", menuName);
+        critMap.put("orderableStatus", orferableStatus);
+
+        return critMap;
     }
 
     private static Map<String, Object> inputSearchCriteriaMap() {

@@ -74,4 +74,22 @@ public class MenuService {
 
         sqlSession.close();
     }
+
+    public void modifyMenu(Map<String, Object> critMap) {
+        SqlSession sqlSession = getSqlSession();
+        MenuMapper mapper = sqlSession.getMapper(MenuMapper.class);
+
+        /* 설명. List형태로 기본적으로는 넘기지 않지만 foreach를 활용하는 동적쿼리는 List 활용 가능(feat. key값 불필요) */
+        int result = mapper.updateMenu(critMap);
+        if(result == 1){
+            System.out.println("메뉴 정보 변경에 성공하셨습니다.");
+            sqlSession.commit();
+        } else {
+            System.out.println("메뉴 정보 변경에 실패하셨습니다.");
+            sqlSession.rollback();
+        }
+
+
+        sqlSession.close();
+    }
 }
