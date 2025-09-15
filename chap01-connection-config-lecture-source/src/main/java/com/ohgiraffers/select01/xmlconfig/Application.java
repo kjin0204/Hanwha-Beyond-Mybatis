@@ -16,15 +16,11 @@ public class Application {
         SqlSession session = null;
 
         try (InputStream inputStream = Resources.getResourceAsStream(resource)){
-
-
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-
             session = sqlSessionFactory.openSession(false); //false를 주어야 수동 커밋 가능
 
             java.util.Date nowDate = session.selectOne("mapper.selectNow");
             System.out.println("Now date: " + nowDate);
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }finally {
